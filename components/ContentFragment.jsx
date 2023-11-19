@@ -64,7 +64,7 @@ function buildContentFragment(index, obj, type) {
             );
         case 'paragraph':
             return (
-                <p key={index} className="mb-8">
+                <p key={index} className="mb-4">
                     {modifiedText.map((item, i) => (
                         <React.Fragment key={i}>{item}</React.Fragment>
                     ))}
@@ -72,11 +72,27 @@ function buildContentFragment(index, obj, type) {
             );
         case 'heading-4':
             return (
-                <h4 key={index} className="text-md mb-4 font-semibold">
+                <h4 key={index} className="text-lg mb-4 font-semibold">
                     {modifiedText.map((item, i) => (
                         <React.Fragment key={i}>{item}</React.Fragment>
                     ))}
                 </h4>
+            );
+        case 'heading-5':
+            return (
+                <h5 key={index} className="text-lg mb-4 font-semibold">
+                    {modifiedText.map((item, i) => (
+                        <React.Fragment key={i}>{item}</React.Fragment>
+                    ))}
+                </h5>
+            );
+        case 'heading-6':
+            return (
+                <h6 key={index} className="text-lg mb-4 font-semibold">
+                    {modifiedText.map((item, i) => (
+                        <React.Fragment key={i}>{item}</React.Fragment>
+                    ))}
+                </h6>
             );
         case 'image':
             return (
