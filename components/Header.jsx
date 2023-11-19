@@ -14,6 +14,12 @@ const Header = () => {
   return (
     <div className="container mx-auto mb-8 px-10">
       <div className="inline-block w-full border-b border-blue-400 py-8">
+        <div className="block md:float-left pr-4">
+          <img src={'/header_logo.svg'}
+            alt="Lucian Blog"
+            height="42px" width="42px"
+            className="rounded-full align-middle" />
+        </div>
         <div className="block md:float-left">
           <Link href="/">
             <span className="cursor-pointer text-4xl font-bold text-white">
@@ -29,6 +35,13 @@ const Header = () => {
               </span>
             </Link>
           ))}
+        </div>
+        <div className="block md:float-left md:contents">
+          <Link href="/about">
+            <span className="mt-2 ml-4 cursor-pointer align-middle font-semibold text-white md:float-right">
+              About
+            </span>
+          </Link>
         </div>
       </div>
     </div>

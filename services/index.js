@@ -1,8 +1,15 @@
 // const graphqlAPI = process.env.NEXT_PUBLIC_TONYBLOG_ENDPOINT;
+import qs from "qs";
+
 const restAPI = "http://localhost:1337/api";
 
 export const getPosts = async () => {
-    const uri = `${restAPI}/posts?populate=*&sort[0]=createdAt:desc`
+    const queryParams = qs.stringify({
+        populate: "*",
+        sort: "createdAt:desc"
+    }, {encode: false})
+
+    const uri = `${restAPI}/posts?${queryParams}`
     const rsp = await fetch(uri)
     const data = await rsp.json()
     const posts = transformPosts(data.data)
@@ -55,7 +62,16 @@ export const getPostDetails = async (slug) => {
 };
 
 export const getRecentPosts = async () => {
-    const uri = `${restAPI}/posts?&sort[0]=createdAt:desc&pagination[page]=1&pagination[pageSize]=3&populate=*`
+    const queryParams = qs.stringify({
+        populate: "*",
+        sort: "createdAt:desc",
+        pagination: {
+            page: 1,
+            pageSize: 3
+        }
+    }, {encode: false})
+
+    const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
     const data = await results.json()
     const posts = transformPosts(data.data)
@@ -63,11 +79,21 @@ export const getRecentPosts = async () => {
 };
 
 export const getSimilarPosts = async (slug, categories) => {
-    let filters = `populate=*&filters[slug][$ne]=${slug}`
-    categories.map((slug, index) => {
-        filters += `&filters[categories][slug][$in][${index}]=${slug}`
-    })
-    const uri = `${restAPI}/posts?${filters}`
+    const queryParams = qs.stringify({
+        filters: {
+            slug: {
+                $ne: slug
+            },
+            categories: {
+                slug: {
+                    $in: categories
+                }
+            }
+        },
+        sort: "createdAt:desc",
+        populate: "*",
+    }, {encode: false})
+    const uri = `${restAPI}/posts?${queryParams}`
 
     const results = await fetch(uri)
     const data = await results.json()
@@ -105,14 +131,29 @@ export const submitComment = async (obj) => {
 
 // String!: String with exclamation mark
 export const getComments = async (slug) => {
-    const uri = `${restAPI}/comments?filters[post][id][$eq]=${slug}`
+    const queryParams = qs.stringify({
+        filters: {
+            post: {
+                id: {$eq: slug}
+            },
+        },
+        sort: "createdAt:desc",
+    }, {encode: false})
+    const uri = `${restAPI}/comments?${queryParams}`
     const results = await fetch(uri)
     const data = await results.json()
     return transformComments(data)
 };
 
 export const getFeaturedPosts = async () => {
-    const uri = `${restAPI}/posts?populate=*&filters[isFeaturedPost][$eq]=true`
+    const queryParams = qs.stringify({
+        filters: {
+            isFeaturedPost: true
+        },
+        sort: "createdAt:desc",
+        populate: "*"
+    }, {encode: false})
+    const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
     const data = await results.json()
     const posts = transformPosts(data.data)
@@ -120,7 +161,16 @@ export const getFeaturedPosts = async () => {
 };
 
 export const getCategoryPost = async (slug) => {
-    const uri = `${restAPI}/posts?filters[categories][slug][$eq]=${slug}&populate=*`
+    const queryParams = qs.stringify({
+        filters: {
+            categories: {
+                slug: slug
+            }
+        },
+        sort: "createdAt:desc",
+        populate: "*"
+    }, {encode: false})
+    const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
     const data = await results.json()
     const posts = transformPosts(data.data)
@@ -134,20 +184,52 @@ export const getAdjacentPosts = async (createdAt, slug) => {
 };
 
 export const getPreviousPosts = async (createdAt, slug) => {
-    const params = `populate=*&filters[slug][$ne]=${slug}&sort=createdAt:desc&filters[createdAt][$lte]=${createdAt}&pagination[start]=0&pagination[limit]=1`
-    const uri = `${restAPI}/posts?${params}`
+    const queryParams = qs.stringify({
+        filters: {
+            slug: {$ne: slug},
+            createdAt: {$lte: createdAt},
+        },
+        pagination:{
+            start: 0,
+            limit: 1,
+        },
+        sort: "createdAt:desc",
+        populate: "*"
+    }, {encode: false})
+    const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
     const data = await results.json()
     const posts = transformPosts(data.data)
     return posts.length > 0 ? posts[0] : undefined
 };
 export const getNextPosts = async (createdAt, slug) => {
-    const params = `populate=*&filters[slug][$ne]=${slug}&sort=createdAt:asc&filters[createdAt][$gte]=${createdAt}&pagination[start]=0&pagination[limit]=1`
-    const uri = `${restAPI}/posts?${params}`
+    const queryParams = qs.stringify({
+        filters: {
+            slug: {$ne: slug},
+            createdAt: {$gte: createdAt},
+        },
+        pagination:{
+            start: 0,
+            limit: 1,
+        },
+        sort: "createdAt:asc",
+        populate: "*"
+    }, {encode: false})
+    const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
     const data = await results.json()
     const posts = transformPosts(data.data)
     return posts.length > 0 ? posts[0] : undefined
+};
+
+export const getAbout = async () => {
+    const uri = `${restAPI}/about?populate=*`
+    const results = await fetch(uri)
+    const data = await results.json()
+    return {
+        id: data.data.id,
+        ...data.data.attributes
+    }
 };
 
 // import { request, gql } from 'graphql-request';

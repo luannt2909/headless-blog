@@ -12,3 +12,8 @@ export { default as CommentsForm } from './CommentsForm';
 export { default as FeaturedPostCard } from './FeaturedPostCard';
 export { default as Loader } from './Loader';
 export { default as AdjacentPostCard } from './AdjacentPostCard';
+export { default as About } from './About';
+export { default as Contact } from './Contact';
+export { default as Technology } from './Technology';
+export { default as Me} from './Me';
+export { default as ContentFragment} from './ContentFragment';

@@ -1,7 +1,7 @@
-# Tony Blog
+# Headless Blog
 Blog app using different modern technology like Next.js, ReactJS, TailwindCSS, GraphQL, GraphCMS, JavaScript, TypeScript, ......
 
-## Link Blog: https://tony-blog-eta.vercel.app/
+## Link Blog:
 
 ### Features:
 - Modern views
