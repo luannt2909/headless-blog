@@ -32,10 +32,16 @@ function transformPost(data) {
 }
 
 function transformCategories(data) {
-    const result = data.data.map((d) => ({
-        id: d.id,
-        ...d.attributes,
-    }))
+    const result = data.data.map((d) => {
+        const c = {
+            id: d.id,
+            ...d.attributes,
+        }
+        if (c.posts) {
+            c.postCount = c.posts?.data?.attributes?.count
+        }
+        return c
+    })
     return result
 }
 
@@ -102,12 +108,23 @@ export const getSimilarPosts = async (slug, categories) => {
     return posts
 };
 
-export const getCategories = async () => {
-    const uri = `${restAPI}/categories`
+export const getCategories = async (withCountPost) => {
+    let uri = `${restAPI}/categories`
+    if (withCountPost) {
+        uri = `${uri}?populate[posts][count]=true`
+    }
     const results = await fetch(uri)
     const data = await results.json()
     const categories = transformCategories(data)
     return categories
+};
+
+export const getMyStatus = async () => {
+    const uri = `${restAPI}/about?populate=me`
+    const results = await fetch(uri)
+    const data = await results.json()
+    console.log("getMyStatus", data)
+    return data.data.attributes.me
 };
 
 export const submitComment = async (obj) => {
@@ -190,7 +207,7 @@ export const getPreviousPosts = async (createdAt, slug) => {
             slug: {$ne: slug},
             createdAt: {$lte: createdAt},
         },
-        pagination:{
+        pagination: {
             start: 0,
             limit: 1,
         },
@@ -209,7 +226,7 @@ export const getNextPosts = async (createdAt, slug) => {
             slug: {$ne: slug},
             createdAt: {$gte: createdAt},
         },
-        pagination:{
+        pagination: {
             start: 0,
             limit: 1,
         },

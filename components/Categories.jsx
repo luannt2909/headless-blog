@@ -8,7 +8,7 @@ const Categories = () => {
 
   // Just call this once when start
   useEffect(() => {
-    getCategories().then((newCate) => setCategories(newCate));
+    getCategories(true).then((newCate) => setCategories(newCate));
   }, []);
 
   return (
@@ -17,7 +17,7 @@ const Categories = () => {
       {categories.map((category) => (
         <Link key={category.slug} href={`/category/${category.slug}`}>
           <span className="mb-3 block cursor-pointer pb-3">
-            {category.name}
+            {category.name} ({category.postCount})
           </span>
         </Link>
       ))}
