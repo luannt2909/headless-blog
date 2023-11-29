@@ -2,8 +2,6 @@ import qs from "qs";
 
 // const restAPI = "http://localhost:1337/api";
 const restAPI = process.env.NEXT_PUBLIC_BLOG_ENDPOINT;
-console.log("NEXT_PUBLIC_BLOG_ENDPOINT: ", restAPI)
-
 export const getPosts = async () => {
     const queryParams = qs.stringify({
         populate: "*",

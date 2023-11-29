@@ -3,6 +3,7 @@ import Link from "next/link";
 import {BlocksRenderer} from '@strapi/blocks-react-renderer';
 import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {Typography} from "@mui/material";
+
 const languagePrefix = '>language-'
 const CodeRow = ({text}) => {
     let fistLine = text?.split("\n")[0]
