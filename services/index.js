@@ -13,7 +13,7 @@ export const getPosts = async () => {
     const uri = `${restAPI}/posts?${queryParams}`
     const rsp = await fetch(uri)
     const data = await rsp.json()
-    const posts = transformPosts(data.data)
+    const posts = data.data ? transformPosts(data.data) : []
     return posts
 };
 
@@ -32,7 +32,7 @@ function transformPost(data) {
 }
 
 function transformCategories(data) {
-    const result = data.data.map((d) => {
+    const result = data.data ? data.data.map((d) => {
         const c = {
             id: d.id,
             ...d.attributes,
@@ -41,12 +41,12 @@ function transformCategories(data) {
             c.postCount = c.posts?.data?.attributes?.count
         }
         return c
-    })
+    }) : []
     return result
 }
 
 function transformAuthor(data) {
-    const author = data.data
+    const author = data.data ? data.data : {}
     return {
         id: author.id,
         ...author.attributes,
@@ -54,7 +54,7 @@ function transformAuthor(data) {
 }
 
 function transformComments(data) {
-    const result = data.data.map((d) => ({id: d.id, ...d.attributes}))
+    const result = data.data ? data.data.map((d) => ({id: d.id, ...d.attributes})) : []
     return result
 }
 

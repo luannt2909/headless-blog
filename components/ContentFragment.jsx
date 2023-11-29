@@ -1,157 +1,125 @@
 import React from 'react';
 import Link from "next/link";
+import {BlocksRenderer} from '@strapi/blocks-react-renderer';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {Typography} from "@mui/material";
+const languagePrefix = '>language-'
+const CodeRow = ({text}) => {
+    let fistLine = text?.split("\n")[0]
+    let language = "javascript"
+    if (fistLine.includes(languagePrefix)){
+        text = text.substring(text.indexOf("\n") + 1)
+        language = fistLine.replace(languagePrefix,"").trim()
+    }
+    return <SyntaxHighlighter language={language}>
+        {text}
+    </SyntaxHighlighter>
+}
 
-const ContentFragment = ({contents}) => {
+const CodeBlock = ({children}) => {
+    if (children.length === 1){
+        const {text} = children[0].props
+        return <CodeRow text={text}/>
+    }
     return (
-        <div>
-            {contents.map((typeObj, index) => buildContentFragment(index, typeObj, typeObj.type))}
+        <pre>
+            <code className="language-go">
+                <Typography className="pl-2 rounded bg-gray-700 text-gray-100 dark:text-white">{children}</Typography>
+            </code>
+        </pre>
+    )
+}
+const List = ({children, format}) => {
+    return (
+        <div className="pl-8 p-2 my-4 bg-gray-50 border-gray-300 rounded">
+            {format === 'ordered' ? (
+                <ol className="list-decimal">
+                    {children}
+                </ol>
+            ) : (
+                <ul className="list-disc">
+                    {children}
+                </ul>
+            )}
         </div>
     )
-};
-
-function buildContentFragment(index, obj, type) {
-    const text = obj.text
-    let modifiedText = text
-    if (obj.children) {
-        modifiedText = obj.children.map((item, i) => buildContentFragment(i, item, item.type))
-    }
-    if (obj) {
-        if (obj.bold) {
-            modifiedText = <b key={index}>{text}</b>;
-        }
-
-        if (obj.italic) {
-            modifiedText = <em key={index}>{text}</em>;
-        }
-
-        if (obj.underline) {
-            modifiedText = <u key={index}>{text}</u>;
-        }
-
-        if (obj.code) {
-            modifiedText = <code key={index} className=" p-4 block bg-gray-300 text-gray-900 dark:text-white">{text}</code>
-        }
-    }
-    if (type === 'heading') {
-        const {level} = obj;
-        type = `${type}-${level}`
-    }
-
-    switch (type) {
-        case 'heading-1':
-            return (
-                <h1 key={index} className="mb-4 text-3xl font-semibold">
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                </h1>
-            );
-        case 'heading-2':
-            return (
-                <h2 key={index} className="mb-4 text-2xl font-semibold">
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                </h2>
-            );
-        case 'heading-3':
-            return (
-                <h3 key={index} className="mb-4 text-xl font-semibold">
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                </h3>
-            );
-        case 'paragraph':
-            return (
-                <p key={index} className="mb-4">
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                </p>
-            );
-        case 'heading-4':
-            return (
-                <h4 key={index} className="text-lg mb-4 font-semibold">
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                </h4>
-            );
-        case 'heading-5':
-            return (
-                <h5 key={index} className="text-lg mb-4 font-semibold">
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                </h5>
-            );
-        case 'heading-6':
-            return (
-                <h6 key={index} className="text-lg mb-4 font-semibold">
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                </h6>
-            );
-        case 'image':
-            return (
-                <img
-                    key={index}
-                    alt={obj.title}
-                    height={obj.height}
-                    width={obj.width}
-                    src={obj.src}
-                />
-            );
-
-        case 'quote':
-            return (
-                <blockquote key={index}
-                            className="p-4 my-4 border-s-4 border-gray-300 bg-gray-300 dark:border-gray-500 dark:bg-gray-800">
-                    <p key={index} className="text-xl italic font-medium leading-relaxed text-gray-900 dark:text-white">
-                        "{modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}"
-                    </p>
-                </blockquote>
-            );
-        case 'list':
-            return (
-                <div key={index} className="pl-8 p-2 my-4 bg-gray-50 border-gray-300">
-                    {obj.format === 'ordered' ? (
-                        <ol className="list-decimal">
-                            {modifiedText}
-                        </ol>
-                    ) : (
-                        <ul className="list-disc">
-                            {modifiedText}
-                        </ul>
-                    )}
-                </div>
-            )
-        case 'list-item':
-            return (
-                <li key={index}>
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                </li>
-            )
-        case 'link':
-            return (
-                <Link key={index} href={obj.url}>
-                    <span key={index} className="block cursor-pointer text-md font-i text-blue-500">
-                    {modifiedText.map((item, i) => (
-                        <React.Fragment key={i}>{item}</React.Fragment>
-                    ))}
-                    </span>
-
-                </Link>
-            )
+}
+const ListItem = ({children}) => {
+    return (
+        <li>
+            <Typography>{children}</Typography>
+        </li>
+    )
+}
+const Heading = ({children, level, className}) => {
+    switch (level) {
+        case 1:
+            return <Typography className={className} variant="h1">{children}</Typography>
+        case 2:
+            return <Typography className={className} variant="h2">{children}</Typography>
+        case 3:
+            return <Typography className={className} variant="h3">{children}</Typography>
+        case 4:
+            return <Typography className={className} variant="h4">{children}</Typography>
+        case 5:
+            return <Typography className={className} variant="h5">{children}</Typography>
+        case 6:
+            return <Typography className={className} variant="h6">{children}</Typography>
         default:
-            return modifiedText;
+            return <Typography className={className} variant="h1">{children}</Typography>
     }
 }
+
+const Quote = ({children}) => {
+    return (
+        <blockquote
+            className="p-4 my-4 rounded border-s-4 border-gray-300 bg-gray-200 dark:border-gray-500 dark:bg-gray-800">
+            <Typography
+                className="text-md italic font-medium leading-relaxed text-gray-900 dark:text-white">{children}</Typography>
+        </blockquote>
+    )
+}
+const LinkItem = ({children, url}) => {
+    return (
+        <Link href={url}>
+            <span className="cursor-pointer text-md font-semibold text-blue-500">{children}</span>
+        </Link>
+    )
+}
+const Image = ({title, height, width, src}) => {
+    return (
+        <img
+            alt={title}
+            height={height}
+            width={width}
+            src={src}
+        />
+    );
+}
+const ContentFragment = ({contents}) => {
+    return (
+        <BlocksRenderer content={contents}
+                        blocks={{
+                            // You can use the default components to set class names...
+                            paragraph: ({children}) => <p className="text-lg mb-4">{children}</p>,
+                            // ...or point to a design system
+                            heading: ({children, level}) => <Heading className="mb-4 mt-4 font-semibold" children={children} level={level}/>,
+                            // For links, you may want to use the component from your router or framework
+                            link: ({children, url}) => <LinkItem children={children} url={url}/>,
+                            // code: ({children}) => <CodeBlock children={children}/>,
+                            code: ({children}) => <CodeBlock>{children}</CodeBlock>,
+                            quote: ({children}) => <Quote children={children}/>,
+                            list: ({children, format}) => <List children={children} format={format}/>,
+                            'list-item': ({children}) => <ListItem children={children}/>,
+                        }}
+                        modifiers={{
+                            bold: ({children}) => <strong>{children}</strong>,
+                            italic: ({children}) => <span className="italic">{children}</span>,
+                            code: ({children}) => <code
+                                className="block bg-gray-800 text-white dark:text-white">{children}</code>
+                        }}
+        />
+    )
+};
 
 export default ContentFragment;

@@ -6,6 +6,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.18",
+    "@strapi/blocks-react-renderer": "^1.0.0-beta.0",
     "axios": "^1.6.2",
     "graphql": "^16.3.0",
     "graphql-request": "^4.1.0",
@@ -13,9 +17,10 @@
     "moment": "^2.29.1",
     "next": "^12.2.0",
     "qs": "^6.11.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-multi-carousel": "^2.8.0",
+    "react-syntax-highlighter": "^15.5.0",
     "react-tsparticles": "^1.42.2",
     "sass": "^1.69.5"
   },
