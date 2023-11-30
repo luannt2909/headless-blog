@@ -1,26 +1,14 @@
 import React from 'react';
 import Link from "next/link";
 import {BlocksRenderer} from '@strapi/blocks-react-renderer';
-import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
 import {Typography} from "@mui/material";
+import CodeBlock from "./CodeBlock";
 
-const languagePrefix = '>language-'
-const CodeRow = ({text}) => {
-    let fistLine = text?.split("\n")[0]
-    let language = "javascript"
-    if (fistLine.includes(languagePrefix)){
-        text = text.substring(text.indexOf("\n") + 1)
-        language = fistLine.replace(languagePrefix,"").trim()
-    }
-    return <SyntaxHighlighter language={language}>
-        {text}
-    </SyntaxHighlighter>
-}
 
-const CodeBlock = ({children}) => {
+const Code = ({children}) => {
     if (children.length === 1){
         const {text} = children[0].props
-        return <CodeRow text={text}/>
+        return <CodeBlock text={text}/>
     }
     return (
         <pre>
@@ -30,6 +18,7 @@ const CodeBlock = ({children}) => {
         </pre>
     )
 }
+
 const List = ({children, format}) => {
     return (
         <div className="pl-8 p-2 my-4 bg-gray-50 border-gray-300 rounded">
@@ -75,8 +64,9 @@ const Quote = ({children}) => {
     return (
         <blockquote
             className="p-4 my-4 rounded border-s-4 border-gray-300 bg-gray-200 dark:border-gray-500 dark:bg-gray-800">
-            <Typography
-                className="text-md italic font-medium leading-relaxed text-gray-900 dark:text-white">{children}</Typography>
+            <pre>
+                <Typography  className="text-md italic font-medium leading-relaxed text-gray-900 dark:text-white">{children}</Typography>
+            </pre>
         </blockquote>
     )
 }
@@ -108,7 +98,7 @@ const ContentFragment = ({contents}) => {
                             // For links, you may want to use the component from your router or framework
                             link: ({children, url}) => <LinkItem children={children} url={url}/>,
                             // code: ({children}) => <CodeBlock children={children}/>,
-                            code: ({children}) => <CodeBlock>{children}</CodeBlock>,
+                            code: ({children}) => <Code>{children}</Code>,
                             quote: ({children}) => <Quote children={children}/>,
                             list: ({children, format}) => <List children={children} format={format}/>,
                             'list-item': ({children}) => <ListItem children={children}/>,
