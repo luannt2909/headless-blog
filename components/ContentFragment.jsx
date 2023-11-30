@@ -64,9 +64,7 @@ const Quote = ({children}) => {
     return (
         <blockquote
             className="p-4 my-4 rounded border-s-4 border-gray-300 bg-gray-200 dark:border-gray-500 dark:bg-gray-800">
-            <pre>
                 <Typography  className="text-md italic font-medium leading-relaxed text-gray-900 dark:text-white">{children}</Typography>
-            </pre>
         </blockquote>
     )
 }
