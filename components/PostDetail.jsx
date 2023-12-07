@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import ContentFragment from "./ContentFragment";
+import MDContent from "./MDContent";
+
 
 const PostDetail = ({ post }) => {
   return (
@@ -45,7 +47,10 @@ const PostDetail = ({ post }) => {
           </div>
         </div>
         <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
-        <ContentFragment contents={post.content}/>
+        {post.mdContent ? <MDContent content={post.mdContent}/> : <ContentFragment contents={post.content}/>}
+        {/*<ContentFragment contents={post.content}/>*/}
+        {/*<MDContent content={post.mdContent}/>*/}
+
       </div>
     </div>
   );

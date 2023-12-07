@@ -121,7 +121,6 @@ export const getMyStatus = async () => {
     const uri = `${restAPI}/about?populate=me`
     const results = await fetch(uri)
     const data = await results.json()
-    console.log("getMyStatus", data)
     return data.data.attributes.me
 };
 
