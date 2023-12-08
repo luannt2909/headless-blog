@@ -60,6 +60,11 @@ const Li = ({children}) => {
         </li>
     )
 }
+const CustomP = ({children}) => {
+    return (
+     <p className="text-lg"> {children}</p>
+    )
+}
 const MDContent = ({content}) => {
     return (
         <article className="content">
@@ -67,9 +72,8 @@ const MDContent = ({content}) => {
                       remarkPlugins={[remarkGfm]}
                       children={content}
                       components={{
-                          code(props) {
-                              return <CodeBlockMD props={props}/>
-                          },
+                          p: CustomP,
+                          code: CodeBlockMD,
                           a: LinkItem,
                           img: CustomImage,
                           blockquote: CustomBlockQuote,
