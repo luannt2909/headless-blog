@@ -160,10 +160,13 @@ export const getComments = async (slug) => {
     return transformComments(data)
 };
 
-export const getFeaturedPosts = async () => {
+export const getFeaturedPosts = async (category) => {
     const queryParams = qs.stringify({
         filters: {
-            isFeaturedPost: true
+            isFeaturedPost: true,
+            categories: category ? {
+                slug: category
+            } : undefined
         },
         sort: "createdAt:desc",
         populate: "*"

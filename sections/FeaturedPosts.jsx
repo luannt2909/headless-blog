@@ -24,12 +24,12 @@ const responsive = {
   },
 };
 
-const FeaturedPosts = () => {
+const FeaturedPosts = ({ category }) => {
   const [featuredPosts, setFeaturedPosts] = useState([]);
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    getFeaturedPosts().then((result) => {
+    getFeaturedPosts(category).then((result) => {
       setFeaturedPosts(result);
       setDataLoaded(true);
     });
