@@ -14,8 +14,11 @@ import {
 } from '../../components';
 
 import { AdjacentPosts } from '../../sections';
+import TableOfContent from "../../components/TableOfContent";
+import TableOfContentV2 from "../../components/TableOfContentV2";
+import slugify from "slugify";
 
-const PostDetails = ({ post }) => {
+const PostDetails = ({ post, toc }) => {
   const router = useRouter();
 
   if (router.isFallback) {
@@ -35,25 +38,41 @@ const PostDetails = ({ post }) => {
         </div>
         <div className="col-span-1 lg:col-span-4">
           <div className="relative top-8 lg:sticky">
+            {/*{post.mdContent && <TableOfContent content={post.mdContent}/>}*/}
+            {post.mdContent && <TableOfContentV2 toc={toc}/>}
             <PostWidget
               slug={post.slug}
               categories={post.categories.map((category) => category.slug)}
             />
-            <Categories />
+            {!post.mdContent && <Categories />}
           </div>
         </div>
       </div>
     </div>
   );
 };
+const generateTOC = (markdown) => {
+  const regex = /^(#{1,6})\s(.+)/gm;
+  const toc = [];
+  let match;
 
+  while ((match = regex.exec(markdown)) !== null) {
+    const level = match[1].length;
+    const text = match[2];
+    const slug = slugify(text, {lower: true, strict: true});
+    const heading = {level, text, slug, children: []}
+    toc.push(heading);
+  }
+
+  return toc;
+};
 // The way to fetch data using getStaticProps in Next.js
 // Next.js will pre-render this page at build time using the props that returned by 'getStaticProps'
 export async function getStaticProps({ params }) {
   const data = (await getPostDetails(params.slug)) || [];
-
+  const toc = generateTOC(data.mdContent)
   return {
-    props: { post: data },
+    props: { post: data, toc: toc},
   };
 }
 

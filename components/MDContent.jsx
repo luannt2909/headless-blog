@@ -1,11 +1,11 @@
-// components/custom-editor.js
-import React from 'react';
-import Markdown from 'react-markdown'
+import React  from 'react';
+import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import styles from './MDContent.module.css'
 import CodeBlockMD from "./CodeBlockMD";
 import Link from "next/link";
 import {Typography} from "@mui/material";
+import remarkSlug from 'remark-slug';
 
 const LinkItem = ({children, href}) => {
     return (
@@ -68,8 +68,8 @@ const CustomP = ({children}) => {
 const MDContent = ({content}) => {
     return (
         <article className="content">
-            <Markdown className={styles.markdown}
-                      remarkPlugins={[remarkGfm]}
+            <ReactMarkdown className={styles.markdown}
+                      remarkPlugins={[remarkGfm, remarkSlug]}
                       children={content}
                       components={{
                           p: CustomP,
