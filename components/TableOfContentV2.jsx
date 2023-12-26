@@ -42,7 +42,10 @@ const TableOfContentV2 = ({toc}) => {
                                 <span
                                     className={classNames('mb-3 block cursor-pointer pb-3 hover:text-blue-500', {
                                         'font-bold': activeHeading === heading.slug,
-                                    })}
+                                        'text-lg': heading.level === 1,
+                                        'text-md': heading.level === 2,
+                                        'text-sm': heading.level >= 3,
+                                    }, `ml-${Math.pow(2, heading.level-1)}`)}
                                 >{heading.text}</span>
                             </Link>
                         </li>
