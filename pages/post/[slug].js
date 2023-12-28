@@ -11,11 +11,10 @@ import {
   Comments,
   CommentsForm,
   Loader,
+  TableOfContent,
 } from '../../components';
 
 import { AdjacentPosts } from '../../sections';
-import TableOfContent from "../../components/TableOfContent";
-import TableOfContentV2 from "../../components/TableOfContentV2";
 import slugify from "slugify";
 
 const PostDetails = ({ post, toc }) => {
@@ -39,7 +38,7 @@ const PostDetails = ({ post, toc }) => {
         <div className="col-span-1 lg:col-span-4">
           <div className="relative top-8 lg:sticky">
             {/*{post.mdContent && <TableOfContent content={post.mdContent}/>}*/}
-            {post.mdContent && <TableOfContentV2 toc={toc}/>}
+            {post.mdContent && <TableOfContent toc={toc}/>}
             <PostWidget
               slug={post.slug}
               categories={post.categories.map((category) => category.slug)}
@@ -90,13 +89,14 @@ export async function getStaticProps({ params }) {
 //    => Then add new blog in GraphCMS
 //      => Won't be able to get it because all of our current posts are going to be statically generated
 export async function getStaticPaths() {
-  const posts = await getPosts();
+  // const posts = await getPosts();
   // const path = posts.map(({ id }) => ({ params: { id: id.toString() } }))
   // console.log("Path: ", path)
   return {
     //   Use destructuring to get out the slug from the posts Object
     // paths: posts.map(({ id }) => ({ params: { id: id.toString() } })),
-    paths: posts.map(({ slug }) => ({ params: { slug } })),
+    // paths: posts.map(({ slug }) => ({ params: { slug } })),
+    paths: [],
     fallback: true,
   };
 }

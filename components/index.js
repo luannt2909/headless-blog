@@ -17,3 +17,5 @@ export { default as Contact } from './Contact';
 export { default as Technology } from './Technology';
 export { default as Me} from './Me';
 export { default as ContentFragment} from './ContentFragment';
+export { default as TableOfContent} from './TableOfContent';
+export { default as InfiniteScrollPost} from './InfiniteScrollPost';

@@ -5,7 +5,8 @@ const restAPI = process.env.NEXT_PUBLIC_BLOG_ENDPOINT;
 export const getPosts = async () => {
     const queryParams = qs.stringify({
         populate: "*",
-        sort: "createdAt:desc"
+        sort: "createdAt:desc",
+        fields: ["featuredImage", "title", "description", "slug", "createdAt"],
     }, {encode: false})
 
     const uri = `${restAPI}/posts?${queryParams}`
@@ -13,6 +14,24 @@ export const getPosts = async () => {
     const data = await rsp.json()
     const posts = data.data ? transformPosts(data.data) : []
     return posts
+};
+
+export const getPostsPagination = async ({page= 0, limit = 10}) => {
+    const queryParams = qs.stringify({
+        populate: "*",
+        sort: "createdAt:desc",
+        fields: ["featuredImage", "title", "description", "slug", "createdAt"],
+        pagination: {
+            page: page,
+            pageSize: limit
+        }
+    }, {encode: false})
+
+    const uri = `${restAPI}/posts?${queryParams}`
+    const rsp = await fetch(uri)
+    const data = await rsp.json()
+    const posts = data.data ? transformPosts(data.data) : []
+    return {posts: posts, pagination: data?.meta?.pagination}
 };
 
 function transformPosts(data) {
@@ -68,8 +87,9 @@ export const getPostDetails = async (slug) => {
 
 export const getRecentPosts = async () => {
     const queryParams = qs.stringify({
-        populate: "*",
+        // populate: "*",
         sort: "createdAt:desc",
+        fields: ["featuredImage", "title", "description", "slug", "createdAt"],
         pagination: {
             page: 1,
             pageSize: 3
@@ -96,7 +116,8 @@ export const getSimilarPosts = async (slug, categories) => {
             }
         },
         sort: "createdAt:desc",
-        populate: "*",
+        // populate: "*",
+        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
 
@@ -169,7 +190,8 @@ export const getFeaturedPosts = async (category) => {
             } : undefined
         },
         sort: "createdAt:desc",
-        populate: "*"
+        populate: "*",
+        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
@@ -186,7 +208,8 @@ export const getCategoryPost = async (slug) => {
             }
         },
         sort: "createdAt:desc",
-        populate: "*"
+        populate: "*",
+        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
@@ -212,7 +235,8 @@ export const getPreviousPosts = async (createdAt, slug) => {
             limit: 1,
         },
         sort: "createdAt:desc",
-        populate: "*"
+        populate: "*",
+        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
@@ -231,7 +255,8 @@ export const getNextPosts = async (createdAt, slug) => {
             limit: 1,
         },
         sort: "createdAt:asc",
-        populate: "*"
+        populate: "*",
+        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
