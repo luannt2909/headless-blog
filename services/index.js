@@ -15,8 +15,14 @@ export const getPosts = async () => {
     const posts = data.data ? transformPosts(data.data) : []
     return posts
 };
+const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
+};
+
 
 export const getPostsPagination = async ({page= 0, limit = 10}) => {
+    // Usage
+    // await  sleep(5000)
     const queryParams = qs.stringify({
         populate: "*",
         sort: "createdAt:desc",
