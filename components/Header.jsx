@@ -1,7 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
+import Typical from 'react-typical';
 
 import {getCategories, getMyStatus} from '../services';
+
+const WelcomeAnimation = ({myStatus}) => {
+    const welcome = ["👋 Hi, I'm Lucian, a Software Engineer", 2000, '👋 Welcome to my Blog!', 1000, myStatus, 3000];
+    return (
+        <div className="block md:float-left">
+            <Typical className="ml-4 text-lg font-bold text-white" loop={3}
+                     steps={welcome}/>
+        </div>
+    )
+}
 
 const Header = () => {
   const [categories, setCategories] = useState([]);
@@ -31,14 +42,7 @@ const Header = () => {
             </span>
           </Link>
         </div>
-        {(me && me.status && me.status !== '') && (
-            <div className="block md:float-left">
-              <span className="ml-4 text-xl font-bold text-white">
-                ({me.status})
-              </span>
-            </div>
-        )
-        }
+        {(me && me.status && me.status !== '') && <WelcomeAnimation myStatus={me.status}/>}
         <div className="hidden md:float-left md:contents">
           {categories.map((category) => (
             <Link key={category.slug} href={`/category/${category.slug}`}>
