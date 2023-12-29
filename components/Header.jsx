@@ -1,17 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
 import Typical from 'react-typical';
+import classNames from "classnames";
 
 import {getCategories, getMyStatus} from '../services';
 
 const WelcomeAnimation = ({myStatus}) => {
-    const welcome = ["👋 Hi, I'm Lucian, a Software Engineer", 2000, '👋 Welcome to my Blog!', 1000, myStatus, 3000];
-    return (
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  const welcome = ["👋 Hi, I'm Lucian, a Software Engineer", 2000, '👋 Welcome to my Blog!', 1000, myStatus, 3000];
+  return (
+      <div className={`typing-animation ${isVisible ? 'visible' : ''}`}>
         <div className="block md:float-left">
-            <Typical className="ml-4 text-lg font-bold text-white" loop={3}
-                     steps={welcome}/>
+          {isVisible && (
+              <Typical className={classNames('ml-4 text-lg font-bold text-white',
+                  `typing-animation ${isVisible ? 'visible' : ''}`)} loop={1} steps={welcome}/>
+          )}
         </div>
-    )
+      </div>
+  )
 }
 
 const Header = () => {

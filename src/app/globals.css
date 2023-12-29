@@ -25,3 +25,12 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.typing-animation {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.typing-animation.visible {
+  opacity: 1;
+}
