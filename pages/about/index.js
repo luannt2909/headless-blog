@@ -32,12 +32,11 @@ const AboutPage = () => {
                             {/* To know that what is the post that these comments belong to */}
                         </div>
                         <div className="col-span-1 lg:col-span-4">
-                            <div className="relative lg:sticky-top">
+                            <div className="relative top-8 lg:sticky">
                                 <Contact contact={aboutData.contact}/>
-                            </div>
-                            <div className="relative top-4 lg:sticky-bottom">
                                 <Technology technologies={aboutData.technologies}/>
                             </div>
+
                         </div>
                     </>
                 )}

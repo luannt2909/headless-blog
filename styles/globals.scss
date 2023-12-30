@@ -72,3 +72,12 @@ a {
   background-image: url('/bg_header.png');
   transition: background-image 2s ease-in-out;
 }
+
+.typing-animation {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.typing-animation.visible {
+  opacity: 1;
+}

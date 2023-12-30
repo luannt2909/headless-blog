@@ -1,30 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
-import Typical from 'react-typical';
-import classNames from "classnames";
-
 import {getCategories, getMyStatus} from '../services';
-import {useMediaQuery} from "@mui/material";
-
-const WelcomeAnimation = ({myStatus}) => {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
-
-  const welcome = ["👋 Hi, I'm Lucian", 2000, "👋I'm a Software Engineer", 1000, '👋 Welcome to my Blog!', 1000, myStatus, 3000];
-  return (
-      <div className={`typing-animation ${isVisible ? 'visible' : ''}`}>
-        <div className="block md:float-left">
-          {isVisible && (
-              <Typical className={classNames('ml-4 text-sm font-bold text-white hidden md:contents',
-                  `typing-animation ${isVisible ? 'visible' : ''}`)} loop={1} steps={welcome}/>
-          )}
-        </div>
-      </div>
-  )
-}
+import CategoriesMenu from "./CategoriesMenu";
+import MyStatus from "./MyStatus";
 
 const Header = () => {
   const [categories, setCategories] = useState([]);
@@ -62,13 +40,13 @@ const Header = () => {
                  className="rounded-full align-middle text-white" />
           </a>
           <Link href="/">
-            <span className="cursor-pointer text-4xl font-bold text-white">
+            <span className="cursor-pointer text-4xl font-semibold text-white">
               Lucian Blog
             </span>
           </Link>
         </div>
 
-        {(me && me.status && me.status !== '') && <WelcomeAnimation myStatus={me.status}/>}
+        {(me && me.status && me.status !== '') && <MyStatus myStatus={me.status}/>}
         <div className="block md:float-left md:contents">
           <Link href="/about">
             <span className="mt-2 mr-2 cursor-pointer align-middle font-semibold text-white md:float-right">
@@ -87,14 +65,14 @@ const Header = () => {
         </div>
 
         <div className="hidden md:float-left md:contents">
-          {/*<CategoriesMenu categories={categories}/>*/}
-          {categories.map((category) => (
-            <Link key={category.slug} href={`/category/${category.slug}`}>
-              <span className="mt-2 mr-2 cursor-pointer align-middle font-semibold md:float-right text-white">
-                {category.name}
-              </span>
-            </Link>
-          ))}
+          <CategoriesMenu categories={categories}/>
+          {/*{categories.map((category) => (*/}
+          {/*  <Link key={category.slug} href={`/category/${category.slug}`}>*/}
+          {/*    <span className="mt-2 mr-2 cursor-pointer align-middle font-semibold md:float-right text-white">*/}
+          {/*      {category.name}*/}
+          {/*    </span>*/}
+          {/*  </Link>*/}
+          {/*))}*/}
         </div>
 
       </div>
