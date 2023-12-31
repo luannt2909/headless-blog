@@ -6,6 +6,7 @@ import CodeBlockMD from "./CodeBlockMD";
 import Link from "next/link";
 import {Typography} from "@mui/material";
 import remarkSlug from 'remark-slug';
+import remarkGemoji from 'remark-gemoji'
 
 const LinkItem = ({children, href}) => {
     return (
@@ -69,7 +70,7 @@ const MDContent = ({content}) => {
     return (
         <article className="content">
             <ReactMarkdown className={styles.markdown}
-                      remarkPlugins={[remarkGfm, remarkSlug]}
+                      remarkPlugins={[remarkGfm, remarkSlug, remarkGemoji]}
                       children={content}
                       components={{
                           p: CustomP,
