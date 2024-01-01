@@ -7,6 +7,7 @@ import Link from "next/link";
 import {Typography} from "@mui/material";
 import remarkSlug from 'remark-slug';
 import remarkGemoji from 'remark-gemoji'
+import slugify from "slugify";
 
 const LinkItem = ({children, href}) => {
     return (
@@ -66,6 +67,13 @@ const CustomP = ({children}) => {
      <p className="text-lg"> {children}</p>
     )
 }
+
+const CustomHeading = ({ children, id, node }) => {
+    const HeadingTag = node.tagName
+    const slug = slugify(id, {lower: true, strict: true})
+    return <HeadingTag id={slug}>{children}</HeadingTag>;
+};
+
 const MDContent = ({content}) => {
     return (
         <article className="content">
@@ -73,6 +81,11 @@ const MDContent = ({content}) => {
                       remarkPlugins={[remarkGfm, remarkSlug, remarkGemoji]}
                       children={content}
                       components={{
+                          h1: CustomHeading,
+                          h2: CustomHeading,
+                          h3: CustomHeading,
+                          h4: CustomHeading,
+                          h5: CustomHeading,
                           p: CustomP,
                           code: CodeBlockMD,
                           a: LinkItem,
