@@ -37,7 +37,6 @@ const PostDetails = ({ post, toc }) => {
         </div>
         <div className="col-span-1 lg:col-span-4">
           <div className="relative top-8 lg:sticky">
-            {/*{post.mdContent && <TableOfContent content={post.mdContent}/>}*/}
             {post.mdContent && <TableOfContent toc={toc}/>}
             <PostWidget
               slug={post.slug}

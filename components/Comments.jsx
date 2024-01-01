@@ -6,12 +6,11 @@ import { getComments } from '../services';
 
 const Comments = ({ slug }) => {
   const [comments, setComments] = useState([]);
-
   useEffect(() => {
     getComments(slug).then((res) => {
       setComments(res)
     });
-  }, []);
+  }, [slug]);
 
   return (
     <>

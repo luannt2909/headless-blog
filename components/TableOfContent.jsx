@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import Link from 'next/link';
-import slugify from 'slugify';
 import classNames from "classnames";
 
 const TableOfContent = ({toc}) => {
