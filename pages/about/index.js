@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 
-import {About, Contact, Loader, Technology,} from '../../components';
+import {About, Contact, CustomHead, Loader, Technology} from '../../components';
 import {getAbout} from "../../services";
 
 
@@ -24,6 +24,7 @@ const AboutPage = () => {
 
     return (
         <div className="container mx-auto mb-8 px-10">
+            <CustomHead title="About Me - Lucian Nguyen"/>
             <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
                 {dataLoaded && (
                     <>

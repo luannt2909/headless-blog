@@ -19,3 +19,4 @@ export { default as Me} from './Me';
 export { default as ContentFragment} from './ContentFragment';
 export { default as TableOfContent} from './TableOfContent';
 export { default as InfiniteScrollPost} from './InfiniteScrollPost';
+export { default as CustomHead} from './Head';

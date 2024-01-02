@@ -2,7 +2,7 @@ import React from 'react';
 import { useRouter } from 'next/router';
 
 import { getCategories, getCategoryPost } from '../../services';
-import { PostCard, Categories, Loader } from '../../components';
+import {PostCard, Categories, Loader, CustomHead} from '../../components';
 import {FeaturedPosts} from "../../sections";
 
 const CategoryPost = ({ posts, slug }) => {
@@ -14,6 +14,7 @@ const CategoryPost = ({ posts, slug }) => {
 
   return (
     <div className="container mx-auto mb-8 px-10">
+      <CustomHead title={`Category ${slug}`}/>
       <FeaturedPosts category={slug}/>
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div className="col-span-1 lg:col-span-8">

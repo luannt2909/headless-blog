@@ -12,10 +12,12 @@ import {
   CommentsForm,
   Loader,
   TableOfContent,
+  CustomHead,
 } from '../../components';
 
 import { AdjacentPosts } from '../../sections';
 import slugify from "slugify";
+import Head from "next/head";
 
 const PostDetails = ({ post, toc }) => {
   const router = useRouter();
@@ -26,6 +28,7 @@ const PostDetails = ({ post, toc }) => {
 
   return (
     <div className="container mx-auto mb-8 px-10">
+      <CustomHead title={post.title}/>
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
         <div className="col-span-1 lg:col-span-8">
           <PostDetail post={post} />
