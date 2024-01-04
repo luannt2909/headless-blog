@@ -48,9 +48,6 @@ const PostDetail = ({ post }) => {
         </div>
         <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
         {post.mdContent ? <MDContent content={post.mdContent}/> : <ContentFragment contents={post.content}/>}
-        {/*<ContentFragment contents={post.content}/>*/}
-        {/*<MDContent content={post.mdContent}/>*/}
-
       </div>
     </div>
   );

@@ -17,7 +17,6 @@ import {
 
 import { AdjacentPosts } from '../../sections';
 import slugify from "slugify";
-import Head from "next/head";
 
 const PostDetails = ({ post, toc }) => {
   const router = useRouter();

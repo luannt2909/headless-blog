@@ -33,7 +33,7 @@ const FeaturedPosts = ({ category }) => {
       setFeaturedPosts(result);
       setDataLoaded(true);
     });
-  }, []);
+  }, [category]);
 
   // Use this to fix `React does not recognize the `carouselState` prop on a DOM element` error
   const ArrowFix = (arrowProps) => {
