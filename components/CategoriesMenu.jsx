@@ -53,9 +53,9 @@ const CategoriesMenu = ({categories}) => {
           </svg>
         </button>
         {isHovered && (
-            <ul className="absolute left-0 right-0 w-max mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
+            <ul className="z-10 absolute left-0 right-0 w-max mt-2 origin-top-right bg-white border border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
               {categories.map(category => (
-                  <li className="cursor-pointer px-4 py-2 hover:bg-gray-100" onClick={()=> handleItemClick(category.name)}>
+                  <li key={category.slug} className="cursor-pointer px-4 py-2 hover:bg-gray-100" onClick={()=> handleItemClick(category.name)}>
                     <Link key={category.slug} href={`/category/${category.slug}`}>
                       <span className="inline-flex text-md text-gray-700 font-medium hover:text-gray-900">
                         {/*<SvgIcon/>*/}

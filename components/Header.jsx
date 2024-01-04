@@ -47,7 +47,7 @@ const Header = () => {
         </div>
 
         {(me && me.status && me.status !== '') && <MyStatus myStatus={me.status}/>}
-        <div className="block md:float-left md:contents">
+        <div className="flex md:float-left md:contents">
           <Link href="/about">
             <span className="mt-2 mr-2 cursor-pointer align-middle font-semibold text-white md:float-right">
               About Me
@@ -58,22 +58,19 @@ const Header = () => {
             <a className="mt-2 mr-2 cursor-pointer align-middle font-semibold text-white md:float-right" target="_blank" rel="noreferrer">
               <span className="flex items-center">
                 Reminder Bot
-                <span className="text-gray-100 text-xs py-0 px-1 rounded-full animate-bounce ">Free</span>
+                <span className="text-gray-100 text-xs py-0 px-1 rounded-full animate-bounce">Free</span>
               </span>
             </a>
           </Link>
+          <div className="cursor-pointer align-middle font-semibold text-white md:float-right">
+            <CategoriesMenu categories={categories}/>
+          </div>
+
         </div>
 
-        <div className="hidden md:float-left md:contents">
-          <CategoriesMenu categories={categories}/>
-          {/*{categories.map((category) => (*/}
-          {/*  <Link key={category.slug} href={`/category/${category.slug}`}>*/}
-          {/*    <span className="mt-2 mr-2 cursor-pointer align-middle font-semibold md:float-right text-white">*/}
-          {/*      {category.name}*/}
-          {/*    </span>*/}
-          {/*  </Link>*/}
-          {/*))}*/}
-        </div>
+        {/*<div className="hidden md:float-left md:contents">*/}
+        {/*  <CategoriesMenu categories={categories}/>*/}
+        {/*</div>*/}
 
       </div>
     </div>

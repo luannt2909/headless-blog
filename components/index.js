@@ -20,3 +20,6 @@ export { default as ContentFragment} from './ContentFragment';
 export { default as TableOfContent} from './TableOfContent';
 export { default as InfiniteScrollPost} from './InfiniteScrollPost';
 export { default as CustomHead} from './Head';
+export { default as PostGrid} from './PostGrid';
+export { default as PostGridCard} from './PostGridCard';
+export { default as CategoriesTab} from './CategoriesTab';
