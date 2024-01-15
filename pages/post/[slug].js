@@ -90,14 +90,13 @@ export async function getStaticProps({ params }) {
 //    => Then add new blog in GraphCMS
 //      => Won't be able to get it because all of our current posts are going to be statically generated
 export async function getStaticPaths() {
-  // const posts = await getPosts();
+  const posts = await getPosts();
   // const path = posts.map(({ id }) => ({ params: { id: id.toString() } }))
-  // console.log("Path: ", path)
   return {
     //   Use destructuring to get out the slug from the posts Object
     // paths: posts.map(({ id }) => ({ params: { id: id.toString() } })),
-    // paths: posts.map(({ slug }) => ({ params: { slug } })),
-    paths: [],
+    paths: posts.map(({ slug }) => ({ params: { slug } })),
+    // paths: [],
     fallback: true,
   };
 }

@@ -2,6 +2,7 @@ import type {NextPage} from 'next';
 import Head from 'next/head';
 import {  Categories, InfiniteScrollPost, PostWidget} from '../components';
 import {FeaturedPosts} from '../sections';
+import { getPosts } from '../services';
 
 const Home: NextPage = ({posts}: any) => {
     return (
@@ -30,11 +31,11 @@ const Home: NextPage = ({posts}: any) => {
 
 // The way to fetch data using getStaticProps in NextJS
 export async function getStaticProps() {
-    // const posts = (await getPosts()) || [];
+    const posts = (await getPosts()) || [];
 
     return {
-        // props: { posts },
-        props: {},
+        props: { posts },
+        // props: {},
     };
 }
 
