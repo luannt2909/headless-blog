@@ -1,7 +1,7 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useRouter } from 'next/router';
 
-import { getPosts, getPostDetails } from '../../services/index';
+import { getPosts, getPostDetails, trackingPost } from '../../services/index';
 
 import {
   PostDetail,
@@ -24,6 +24,10 @@ const PostDetails = ({ post, toc }) => {
   if (router.isFallback) {
     return <Loader />;
   }
+
+  useEffect(() => {
+    trackingPost(post.id)
+  },[])
 
   return (
     <div className="container mx-auto mb-8 px-10">

@@ -2,11 +2,13 @@ import qs from "qs";
 
 // const restAPI = "http://localhost:1337/api";
 const restAPI = process.env.NEXT_PUBLIC_BLOG_ENDPOINT;
+
+const DEFAULT_POST_FIELDS = ["featuredImage", "title", "description", "slug", "createdAt", "viewCount"]
 export const getPosts = async () => {
     const queryParams = qs.stringify({
         populate: "*",
         sort: "createdAt:desc",
-        fields: ["featuredImage", "title", "description", "slug", "createdAt"],
+        fields: DEFAULT_POST_FIELDS,
     }, {encode: false})
 
     const uri = `${restAPI}/posts?${queryParams}`
@@ -26,7 +28,7 @@ export const getPostsPagination = async ({page= 0, limit = 10}) => {
     const queryParams = qs.stringify({
         populate: "*",
         sort: "createdAt:desc",
-        fields: ["featuredImage", "title", "description", "slug", "createdAt"],
+        fields: DEFAULT_POST_FIELDS,
         pagination: {
             page: page,
             pageSize: limit
@@ -95,7 +97,25 @@ export const getRecentPosts = async () => {
     const queryParams = qs.stringify({
         // populate: "*",
         sort: "createdAt:desc",
-        fields: ["featuredImage", "title", "description", "slug", "createdAt"],
+        fields: DEFAULT_POST_FIELDS,
+        pagination: {
+            page: 1,
+            pageSize: 3
+        }
+    }, {encode: false})
+
+    const uri = `${restAPI}/posts?${queryParams}`
+    const results = await fetch(uri)
+    const data = await results.json()
+    const posts = transformPosts(data.data)
+    return posts
+};
+
+export const getPopularPosts = async () => {
+    const queryParams = qs.stringify({
+        // populate: "*",
+        sort: "viewCount:desc",
+        fields: DEFAULT_POST_FIELDS,
         pagination: {
             page: 1,
             pageSize: 3
@@ -123,7 +143,7 @@ export const getSimilarPosts = async (slug, categories) => {
         },
         sort: "createdAt:desc",
         // populate: "*",
-        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
+        fields: DEFAULT_POST_FIELDS
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
 
@@ -197,7 +217,7 @@ export const getFeaturedPosts = async (category) => {
         },
         sort: "createdAt:desc",
         populate: "*",
-        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
+        fields: DEFAULT_POST_FIELDS
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
@@ -215,7 +235,7 @@ export const getCategoryPost = async (slug) => {
         },
         sort: "createdAt:desc",
         populate: "*",
-        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
+        fields: DEFAULT_POST_FIELDS
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
@@ -242,7 +262,7 @@ export const getPreviousPosts = async (createdAt, slug) => {
         },
         sort: "createdAt:desc",
         populate: "*",
-        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
+        fields: DEFAULT_POST_FIELDS
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
@@ -262,7 +282,7 @@ export const getNextPosts = async (createdAt, slug) => {
         },
         sort: "createdAt:asc",
         populate: "*",
-        fields: ["featuredImage", "title", "description", "slug", "createdAt"]
+        fields: DEFAULT_POST_FIELDS
     }, {encode: false})
     const uri = `${restAPI}/posts?${queryParams}`
     const results = await fetch(uri)
@@ -273,6 +293,16 @@ export const getNextPosts = async (createdAt, slug) => {
 
 export const getAbout = async () => {
     const uri = `${restAPI}/about?populate=*`
+    const results = await fetch(uri)
+    const data = await results.json()
+    return {
+        id: data.data.id,
+        ...data.data.attributes
+    }
+};
+
+export const trackingPost = async (id) => {
+    const uri = `${restAPI}/posts/${id}/tracking`
     const results = await fetch(uri)
     const data = await results.json()
     return {
