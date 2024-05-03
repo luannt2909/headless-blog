@@ -54,7 +54,7 @@ const Header = () => {
             </span>
           </Link>
 
-          <Link href="https://reminderbot.luciango.com/admin" passHref target="_blank" rel="noreferrer">
+          <Link href="https://reminderbot.me" passHref target="_blank" rel="noreferrer">
             <a className="mt-2 mr-2 cursor-pointer align-middle font-semibold text-white md:float-right" target="_blank" rel="noreferrer">
               <span className="flex items-center">
                 Reminder Bot
