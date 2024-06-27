@@ -80,6 +80,23 @@ export async function getStaticProps({ params }) {
   };
 }
 
+export async function generateMetadata({ params }, parent) {
+  const post = (await getPostDetails(params.slug)) || [];
+  console.log("XXX", params, post)
+  // fetch data
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || []
+
+  return {
+    title: post.title,
+    description: "Read more, know more, share more!",
+    openGraph: {
+      images: [post.featuredImage, ...previousImages],
+    },
+  }
+}
+
 // If a page has Dynamic Routes and uses 'getStaticProps', it needs to define a list of paths tobe statically generated
 // When export a function called 'getStaticProps' (Static Site Generation) from a page that uses dynamic routes, Next.js will statically pre-render all the paths specified by 'getStaticProps'
 // It basically mean: must need to specify what kind of articles are we going to have

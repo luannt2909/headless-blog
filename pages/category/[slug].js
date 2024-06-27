@@ -5,6 +5,20 @@ import { getCategories, getCategoryPost } from '../../services';
 import {PostCard, Categories, Loader, CustomHead, PostGrid, CategoriesTab} from '../../components';
 import {FeaturedPosts} from "../../sections";
 
+export const metadata = {
+    title: 'Lucian Blog Category',
+    description: 'Read more, know more, share more!',
+    openGraph: {
+        images: [
+            {
+                url: 'https://i.imgur.com/nl3N786.jpg', // Must be an absolute URL
+                width: 800,
+                height: 600,
+            }
+        ],
+    },
+}
+
 const CategoryPost = ({ posts, slug }) => {
   const router = useRouter();
 

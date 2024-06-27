@@ -4,6 +4,19 @@ import {  Categories, InfiniteScrollPost, PostWidget} from '../components';
 import {FeaturedPosts} from '../sections';
 import { getPosts } from '../services';
 
+export const metadata = {
+    title: 'Lucian Blog',
+    description: 'Read more, know more, share more!',
+    openGraph: {
+        images: [
+            {
+                url: 'https://i.imgur.com/nl3N786.jpg', // Must be an absolute URL
+                width: 800,
+                height: 600,
+            }
+        ],
+    },
+}
 const Home: NextPage = ({posts}: any) => {
     return (
         <div className="container mx-auto mb-8 px-10">

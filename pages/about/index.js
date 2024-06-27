@@ -4,7 +4,19 @@ import {useRouter} from 'next/router';
 import {About, Contact, CustomHead, Loader, Technology} from '../../components';
 import {getAbout} from "../../services";
 
-
+export const metadata = {
+    title: 'Lucian About Me',
+    description: 'Read more, know more, share more!',
+    openGraph: {
+        images: [
+            {
+                url: 'https://i.imgur.com/nl3N786.jpg', // Must be an absolute URL
+                width: 800,
+                height: 600,
+            }
+        ],
+    },
+}
 const AboutPage = () => {
     const router = useRouter();
     const [aboutData, setAboutData] = useState({});

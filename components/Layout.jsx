@@ -2,10 +2,12 @@ import React from 'react';
 import { Header } from './';
 import { Footer } from './';
 import Particles from 'react-tsparticles';
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const Layout = ({ children }) => {
   return (
     <>
+      <GoogleTagManager gtmId="G-3XLSDQGJ3E" />
       <Particles
         options={{
           background: {
