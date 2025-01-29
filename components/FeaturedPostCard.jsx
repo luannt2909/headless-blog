@@ -17,7 +17,7 @@ const FeaturedPostCard = ({ post }) => (
       <p className="text-shadow mb-4 text-center text-2xl font-semibold text-white">
         {post.title}
       </p>
-      <div className="absolute bottom-5 flex w-full items-center justify-center">
+      {/* <div className="absolute bottom-5 flex w-full items-center justify-center">
         <Image
           unoptimized
           alt={post.author.name}
@@ -29,7 +29,7 @@ const FeaturedPostCard = ({ post }) => (
         <p className="text-shadow ml-2 inline align-middle font-medium text-white">
           {post.author.name}
         </p>
-      </div>
+      </div> */}
     </div>
     <Link href={`/post/${post.slug}`}>
       <span className="absolute h-full w-full cursor-pointer" />
